@@ -13,17 +13,71 @@ describe("caesar_cipher", () => {
 });
 
 describe("Function.prototype.myCurry", () => {
+  const adder = function (...argBalls) {
+    return argBalls.reduce((a, b) => {
+      return a + b;
+    }, 0);
+  };
+
   it("collects up arguments until there are numArgs of them", () => {
-
+    expect(adder.myCurry(3)(1)(2)(3)).toEqual(6);
   });
+
   it("if there are too few arguments still, it should return itself", () => {
-
+    const myCurryResult = adder.myCurry(3)(1)(2);
+    expect(myCurryResult).not.toEqual(6);
+    expect(typeof(myCurryResult)).toEqual("function");
   });
-  it("when there are numArgs arguments, it should call the original function", () => {
 
+  // it("when there are numArgs arguments, it should call the original function", () => {
+  //   spyOn(Function.prototype, "adder")
+  // });
+  //
+  // it("uses Function.prototype.apply", () => {
+  //
+  //   expect(adder)
+  // });
+});
+
+describe("Array.prototype.myFlatten", ()=> {
+  const simpleArray = [1,2,3,4,5];
+
+  const nestedArray = [1,2,[3],4,[5,6,7]];
+
+  const doublyNestedArray = [1,[2],[3,[4],[[],5]],6];
+
+  const suhNestedArray = [1,[[[2]]],[[[[4, 5 ,6]]]], 7];
+
+  it("can handle an empty array", () => {
+    expect([].myFlatten()).toEqual([]);
   });
-  it("uses Function.prototype.apply", () => {
 
+  it("does not modify the original array", () => {
+    let originalArray = nestedArray;
+    nestedArray.myFlatten();
+    expect(nestedArray).toBe(originalArray);
+  });
+
+  it("can handle two-dimensional arrays", () => {
+    expect(nestedArray.myFlatten()).toEqual([1, 2, 3, 4, 5, 6, 7]);
+  });
+
+  it("can handle arbitrarily deeply nested arrays", () => {
+    expect(doublyNestedArray.myFlatten()).toEqual([1, 2, 3, 4, 5, 6]);
+  });
+
+  it("it takes an optional argument", () => {
+    expect(suhNestedArray.myFlatten(2).toEqual([1, [2], [[4, 5, 6]], 7]));
+  });
+
+  it("calls itself recursively", () => {
+    spyOn(Array.prototype, "myFlatten").and.callThrough();
+
+    suhNestedArray.myFlatten();
+
+    const count = Array.prototype.myFlatten().calls.count();
+    expect(count).toBeGreaterThan(3);
+    expect(count).toBeLessThan(10);
   });
 });
 
@@ -264,6 +318,16 @@ describe("transpose", () => {
 //
 // Tests
 //
+//
+// minHeap.prototype.getMin() returns the correct min
+//
+//  minHeap.prototype.getMin() returns the correct min after several additions
+//
+// minHeap calls _swap with two elements
+//
+// minHeap calls _swap the correct number of times
+//
+// minHeap returns the min in constant time
 //
 //
 //
