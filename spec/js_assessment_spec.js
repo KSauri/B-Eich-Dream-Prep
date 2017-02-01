@@ -1,10 +1,4 @@
-<<<<<<< HEAD
 describe("caesarCipher", () => {
-=======
-
-
-describe("caesar_cipher", () => {
->>>>>>> f596e122b340beec747d60dfccdf3da1f42f540e
   it("encodes a simple word", () => {
     expect(caesarCipher("aaa", 11)).toEqual("lll");
   });
@@ -348,56 +342,56 @@ describe("transpose", () => {
 //
 
 
-describe("minHeap", () => {
-  beforeEach( () => {
-    minHeapZero = new MinHeap();
-    minHeapZero.add(5);
-
-    minHeapOne = new MinHeap();
-    minHeapOne.add(1);
-    minHeapOne.add(2);
-    minHeapOne.add(3);
-    minHeapOne.add(4);
-
-    minHeapTwo = new MinHeap();
-    minHeapTwo.add(110);
-    minHeapTwo.add(90);
-    minHeapTwo.add(70);
-    minHeapTwo.add(50);
-    minHeapTwo.add(60);
-  });
-
-  it("returns the correct minimum for a simple heap", () => {
-    expect(minHeapZero.getMin()).toEqual(5);
-  });
-
-  it("returns the correct minimum after several additions", () => {
-    expect(minHeapOne.getMin()).toEqual(1);
-  });
-
-  it("returns the correct minimum for a more complex heap", () => {
-    expect(minHeapTwo.getMin()).toEqual(50);
-  });
-
-  it("calls swap correct number of times", () => {
-    spyOn(MinHeap.prototype, "_swap").and.callThrough();
-
-    minHeapTwo.getMin();
-
-    const count = MinHeap.prototype._swap.calls.count();
-    expect(count).toBeGreaterThan(4);
-    expect(count).toBeLessThan(8);
-  });
-
-  it("returns the min in constant time", () => {
-    spyOn(MinHeap.prototype, "_nodeValue").and.callThrough();
-
-    minHeapTwo.getMin();
-
-    const count = MinHeap.prototype._nodeValue.calls.count();
-    expect(count).toBeLessThan(2);
-  });
-});
+// describe("minHeap", () => {
+//   beforeEach( () => {
+//     minHeapZero = new MinHeap();
+//     minHeapZero.add(5);
+//
+//     minHeapOne = new MinHeap();
+//     minHeapOne.add(1);
+//     minHeapOne.add(2);
+//     minHeapOne.add(3);
+//     minHeapOne.add(4);
+//
+//     minHeapTwo = new MinHeap();
+//     minHeapTwo.add(110);
+//     minHeapTwo.add(90);
+//     minHeapTwo.add(70);
+//     minHeapTwo.add(50);
+//     minHeapTwo.add(60);
+//   });
+//
+//   it("returns the correct minimum for a simple heap", () => {
+//     expect(minHeapZero.getMin()).toEqual(5);
+//   });
+//
+//   it("returns the correct minimum after several additions", () => {
+//     expect(minHeapOne.getMin()).toEqual(1);
+//   });
+//
+//   it("returns the correct minimum for a more complex heap", () => {
+//     expect(minHeapTwo.getMin()).toEqual(50);
+//   });
+//
+//   it("calls swap correct number of times", () => {
+//     spyOn(MinHeap.prototype, "_swap").and.callThrough();
+//
+//     minHeapTwo.getMin();
+//
+//     const count = MinHeap.prototype._swap.calls.count();
+//     expect(count).toBeGreaterThan(4);
+//     expect(count).toBeLessThan(8);
+//   });
+//
+//   it("returns the min in constant time", () => {
+//     spyOn(MinHeap.prototype, "_nodeValue").and.callThrough();
+//
+//     minHeapTwo.getMin();
+//
+//     const count = MinHeap.prototype._nodeValue.calls.count();
+//     expect(count).toBeLessThan(2);
+//   });
+// });
 
 // spyOn(Array.prototype, "mergeSort").and.callThrough();
 //
