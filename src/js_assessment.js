@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //Write caesar_cipher(string, shift). You may assume all
 //lowercase letters. You may wish to use a helper method that
 //decodes one word at a time. Hint: use String.prototype.codePointAt(0)
@@ -49,3 +50,27 @@ Array.prototype.myFlatten = function (n) {
 
   return flattened;
 };
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// module.exports = MinHeap;
+>>>>>>> f596e122b340beec747d60dfccdf3da1f42f540e
