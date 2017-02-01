@@ -13,33 +13,29 @@ describe("caesarCipher", () => {
 });
 
 describe("Function.prototype.myCurry", () => {
-  const adder = function (...argBalls) {
+  function adder (...argBalls) {
     return argBalls.reduce((a, b) => {
       return a + b;
     }, 0);
-  };
+  }
 
   it("collects up arguments until there are numArgs of them", () => {
     expect(adder.myCurry(3)(1)(2)(3)).toEqual(6);
   });
 
-  it("if there are too few arguments still, it should return itself", () => {
+  it("should return itself if there are too few arguments still", () => {
     const myCurryResult = adder.myCurry(3)(1)(2);
     expect(myCurryResult).not.toEqual(6);
     expect(typeof(myCurryResult)).toEqual("function");
   });
 
-  it("when there are numArgs arguments, it should call the original function", () => {
-    spyOn(adder, "adderSpy");
+  it("should call the original function", () => {
+    spyOn(Function.prototype, "adder");
 
     adder.myCurry(3)(1)(2)(3);
     expect(adder).toHaveBeenCalled();
   });
 
-  // it("uses Function.prototype.apply", () => {
-  //
-  //   expect(adder)
-  // });
 });
 
 describe("Array.prototype.myFlatten", ()=> {
@@ -120,10 +116,10 @@ describe("Function.prototype.myCall", () => {
       .toEqual("Sally says hello to Markov and Curie");
   });
   it("does not use the 'call' function", () => {
-    spyOn(call, "callSpy");
+    spyOn(Function.prototype, "call");
 
     sally.greetTwo.myCall(sally, markov, curie);
-    expect(call).not.toHaveBeenCalled();
+    expect(Function.prototype.call).not.toHaveBeenCalled();
   });
 
   it("should call the function method style on the context", () => {
@@ -136,7 +132,7 @@ describe("Array#bSearch", () => {
   const array =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
   it("works with an empty array", () => {
-    expect([].bSearch(5)).toEqual([]);
+    expect([].bSearch(5)).toEqual(-1);
   });
 
   it("works with an array of one item", () => {
@@ -144,7 +140,7 @@ describe("Array#bSearch", () => {
   });
 
   it("returns the first duplicate it finds", () => {
-    expect([0,1,2,3,3,4,5].bSearch()).toEqual(3);
+    expect([0,1,2,3,3,4,5].bSearch(3)).toEqual(3);
   });
 
   it("calls itself recursively", () => {
@@ -160,7 +156,7 @@ describe("Array#bSearch", () => {
   it("does not modify original", () =>{
     const dupedArray = [1, 2, 3, 4, 5, 6];
     dupedArray.bSearch(2);
-    expect(dupedArray).toEqual(array);
+    expect(dupedArray).toEqual([1, 2, 3, 4, 5, 6]);
   });
 });
 
@@ -213,7 +209,7 @@ describe("Array#mergeSort", () => {
   });
 });
 
-describe("transpose", () => {
+describe("#transpose", () => {
   //before each necessary
   const arr = [
     [1, 2, 3],
@@ -342,56 +338,56 @@ describe("transpose", () => {
 //
 
 
-// describe("minHeap", () => {
-//   beforeEach( () => {
-//     minHeapZero = new MinHeap();
-//     minHeapZero.add(5);
-//
-//     minHeapOne = new MinHeap();
-//     minHeapOne.add(1);
-//     minHeapOne.add(2);
-//     minHeapOne.add(3);
-//     minHeapOne.add(4);
-//
-//     minHeapTwo = new MinHeap();
-//     minHeapTwo.add(110);
-//     minHeapTwo.add(90);
-//     minHeapTwo.add(70);
-//     minHeapTwo.add(50);
-//     minHeapTwo.add(60);
-//   });
-//
-//   it("returns the correct minimum for a simple heap", () => {
-//     expect(minHeapZero.getMin()).toEqual(5);
-//   });
-//
-//   it("returns the correct minimum after several additions", () => {
-//     expect(minHeapOne.getMin()).toEqual(1);
-//   });
-//
-//   it("returns the correct minimum for a more complex heap", () => {
-//     expect(minHeapTwo.getMin()).toEqual(50);
-//   });
-//
-//   it("calls swap correct number of times", () => {
-//     spyOn(MinHeap.prototype, "_swap").and.callThrough();
-//
-//     minHeapTwo.getMin();
-//
-//     const count = MinHeap.prototype._swap.calls.count();
-//     expect(count).toBeGreaterThan(4);
-//     expect(count).toBeLessThan(8);
-//   });
-//
-//   it("returns the min in constant time", () => {
-//     spyOn(MinHeap.prototype, "_nodeValue").and.callThrough();
-//
-//     minHeapTwo.getMin();
-//
-//     const count = MinHeap.prototype._nodeValue.calls.count();
-//     expect(count).toBeLessThan(2);
-//   });
-// });
+describe("minHeap", () => {
+  beforeEach( () => {
+    minHeapZero = new MinHeap();
+    minHeapZero.add(5);
+
+    minHeapOne = new MinHeap();
+    minHeapOne.add(1);
+    minHeapOne.add(2);
+    minHeapOne.add(3);
+    minHeapOne.add(4);
+
+    minHeapTwo = new MinHeap();
+    minHeapTwo.add(110);
+    minHeapTwo.add(90);
+    minHeapTwo.add(70);
+    minHeapTwo.add(50);
+    minHeapTwo.add(60);
+  });
+
+  it("returns the correct minimum for a simple heap", () => {
+    expect(minHeapZero.getMin()).toEqual(5);
+  });
+
+  it("returns the correct minimum after several additions", () => {
+    expect(minHeapOne.getMin()).toEqual(1);
+  });
+
+  it("returns the correct minimum for a more complex heap", () => {
+    expect(minHeapTwo.getMin()).toEqual(50);
+  });
+
+  it("calls swap correct number of times", () => {
+    spyOn(MinHeap.prototype, "_swap").and.callThrough();
+
+    minHeapTwo.getMin();
+
+    const count = MinHeap.prototype._swap.calls.count();
+    expect(count).toBeGreaterThan(4);
+    expect(count).toBeLessThan(8);
+  });
+
+  it("returns the min in constant time", () => {
+    spyOn(MinHeap.prototype, "").and.callThrough();
+
+    minHeapTwo.getMin();
+
+    const count = MinHeap.prototype._nodeValue.calls.count();
+    expect(count).toBeLessThan(2);
+  });
+});
 
 // spyOn(Array.prototype, "mergeSort").and.callThrough();
 //
