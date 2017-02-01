@@ -1,14 +1,14 @@
-describe("caesar_cipher", () => {
+describe("caesarCipher", () => {
   it("encodes a simple word", () => {
-    expect(caesar_cipher("aaa", 11)).toEqual("lll");
+    expect(caesarCipher("aaa", 11)).toEqual("lll");
   });
 
   it("wraps around the alphabet", () => {
-    expect(caesar_cipher("zzz", 1)).toEqual("aaa");
+    expect(caesarCipher("zzz", 1)).toEqual("aaa");
   });
 
   it("encodes multiple words", () => {
-    expect(caesar_cipher("catz hatz", 2)).toEqual("ecvb jcvb");
+    expect(caesarCipher("catz hatz", 2)).toEqual("ecvb jcvb");
   });
 });
 
