@@ -1,3 +1,5 @@
+
+
 describe("caesar_cipher", () => {
   it("encodes a simple word", () => {
     expect(caesar_cipher("aaa", 11)).toEqual("lll");
@@ -29,10 +31,13 @@ describe("Function.prototype.myCurry", () => {
     expect(typeof(myCurryResult)).toEqual("function");
   });
 
-  // it("when there are numArgs arguments, it should call the original function", () => {
-  //   spyOn(Function.prototype, "adder")
-  // });
-  //
+  it("when there are numArgs arguments, it should call the original function", () => {
+    spyOn(adder, "adderSpy");
+
+    adder.myCurry(3)(1)(2)(3);
+    expect(adder).toHaveBeenCalled();
+  });
+
   // it("uses Function.prototype.apply", () => {
   //
   //   expect(adder)
@@ -40,6 +45,7 @@ describe("Function.prototype.myCurry", () => {
 });
 
 describe("Array.prototype.myFlatten", ()=> {
+  // before each, declare var names before before each
   const simpleArray = [1,2,3,4,5];
 
   const nestedArray = [1,2,[3],4,[5,6,7]];
@@ -71,11 +77,11 @@ describe("Array.prototype.myFlatten", ()=> {
   });
 
   it("calls itself recursively", () => {
-    spyOn(Array.prototype, "myFlatten").and.callThrough();
+    spyOn(Array.prototype.myFlatten, "myFlatten").and.callThrough();
 
     suhNestedArray.myFlatten();
 
-    const count = Array.prototype.myFlatten().calls.count();
+    const count = Array.prototype.myFlatten.calls.count();
     expect(count).toBeGreaterThan(3);
     expect(count).toBeLessThan(10);
   });
@@ -116,8 +122,12 @@ describe("Function.prototype.myCall", () => {
       .toEqual("Sally says hello to Markov and Curie");
   });
   it("does not use the 'call' function", () => {
+    spyOn(call, "callSpy");
 
+    sally.greetTwo.myCall(sally, markov, curie);
+    expect(call).not.toHaveBeenCalled();
   });
+
   it("should call the function method style on the context", () => {
     expect(sally.sayHello.myCall(markov)).toEqual("Markov says hello!");
   });
@@ -206,6 +216,7 @@ describe("Array#mergeSort", () => {
 });
 
 describe("transpose", () => {
+  //before each necessary
   const arr = [
     [1, 2, 3],
     [4, 5, 6],
@@ -314,14 +325,16 @@ describe("transpose", () => {
 // the ability to find the minimum immediately,
 // and the ability to add elements.
 //
-// You may want a helper method, _swap, which swaps two elements in the tree.
+// You will need a helper method, _swap, which swaps two elements in the tree.
+// You will also need a helper method, _nodeValue, that checks the value at each node
 //
-// Tests
+//
+//Tests
 //
 //
 // minHeap.prototype.getMin() returns the correct min
 //
-//  minHeap.prototype.getMin() returns the correct min after several additions
+// minHeap.prototype.getMin() returns the correct min after several additions
 //
 // minHeap calls _swap with two elements
 //
@@ -329,10 +342,89 @@ describe("transpose", () => {
 //
 // minHeap returns the min in constant time
 //
+
+
+describe("minHeap", () => {
+  beforeEach( () => {
+    minHeapZero = new MinHeap();
+    minHeapZero.add(5);
+
+    minHeapOne = new MinHeap();
+    minHeapOne.add(1);
+    minHeapOne.add(2);
+    minHeapOne.add(3);
+    minHeapOne.add(4);
+
+    minHeapTwo = new MinHeap();
+    minHeapTwo.add(110);
+    minHeapTwo.add(90);
+    minHeapTwo.add(70);
+    minHeapTwo.add(50);
+    minHeapTwo.add(60);
+  });
+
+  it("returns the correct minimum for a simple heap", () => {
+    expect(minHeapZero.getMin()).toEqual(5);
+  });
+
+  it("returns the correct minimum after several additions", () => {
+    expect(minHeapOne.getMin()).toEqual(1);
+  });
+
+  it("returns the correct minimum for a more complex heap", () => {
+    expect(minHeapTwo.getMin()).toEqual(50);
+  });
+
+  it("calls swap correct number of times", () => {
+    spyOn(MinHeap.prototype, "_swap").and.callThrough();
+
+    minHeapTwo.getMin();
+
+    const count = MinHeap.prototype._swap.calls.count();
+    expect(count).toBeGreaterThan(4);
+    expect(count).toBeLessThan(8);
+  });
+
+  it("returns the min in constant time", () => {
+    spyOn(MinHeap.prototype, "_nodeValue").and.callThrough();
+
+    minHeapTwo.getMin();
+
+    const count = MinHeap.prototype._nodeValue.calls.count();
+    expect(count).toBeLessThan(2);
+  });
+});
+
+// spyOn(Array.prototype, "mergeSort").and.callThrough();
 //
+// array.mergeSort();
 //
+// const count = Array.prototype.mergeSort.calls.count();
+// expect(count).toBeGreaterThan(4);
+// expect(count).toBeLessThan(10);
+
+
+// beforeEach(() => {
+//   class Cat {
+//     constructor (name) {
+//       this.name = name;
+//     }
 //
+//     sayHello () {
+//       return this.name + " says hello!";
+//     }
 //
+//     greetOne (otherCat) {
+//       return this.name + " says hello to " + otherCat.name;
+//     }
 //
+//     greetTwo (otherCat1, otherCat2) {
+//       return this.name + " says hello to " + otherCat1.name + " and " +
+//         otherCat2.name;
+//     }
+//   }
 //
-//
+//   sally = new Cat("Sally");
+//   markov = new Cat("Markov");
+//   curie = new Cat("Curie");
+// });
