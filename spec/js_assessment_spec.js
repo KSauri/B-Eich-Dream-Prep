@@ -67,7 +67,7 @@ describe("Array.prototype.myFlatten", ()=> {
   });
 
   it("it takes an optional argument", () => {
-    expect(suhNestedArray.myFlatten(2).toEqual([1, [2], [[4, 5, 6]], 7]));
+    expect(suhNestedArray.myFlatten(2)).toEqual([1, [2], [[4, 5, 6]], 7]);
   });
 
   it("calls itself recursively", () => {
