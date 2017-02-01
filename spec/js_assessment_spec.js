@@ -30,7 +30,7 @@ describe("Function.prototype.myCurry", () => {
   });
 
   it("should call the original function", () => {
-    spyOn(Function.prototype, "adder");
+    spyOn(Function.prototype.adder, "adder");
 
     adder.myCurry(3)(1)(2)(3);
     expect(adder).toHaveBeenCalled();

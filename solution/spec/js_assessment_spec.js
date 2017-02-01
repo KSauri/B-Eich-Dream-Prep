@@ -13,11 +13,13 @@ describe("caesarCipher", () => {
 });
 
 describe("Function.prototype.myCurry", () => {
-  function adder (...argBalls) {
+  const adder = function (...argBalls) {
     return argBalls.reduce((a, b) => {
       return a + b;
     }, 0);
   }
+  const addObj = { adder };
+
 
   it("collects up arguments until there are numArgs of them", () => {
     expect(adder.myCurry(3)(1)(2)(3)).toEqual(6);
@@ -30,10 +32,10 @@ describe("Function.prototype.myCurry", () => {
   });
 
   it("should call the original function", () => {
-    spyOn(Function.prototype, "adder");
+    spyOn(addObj, "adder");
 
-    adder.myCurry(3)(1)(2)(3);
-    expect(adder).toHaveBeenCalled();
+    addObj.adder.myCurry(3)(1)(2)(3);
+    expect(addObj.adder).toHaveBeenCalled();
   });
 
 });
@@ -379,46 +381,9 @@ describe("minHeap", () => {
     expect(count).toBeLessThan(8);
   });
 
-  it("returns the min in constant time", () => {
-    spyOn(MinHeap.prototype, "").and.callThrough();
+  it("returns the min", () => {
+    minHeapTwo.heap = [1000, 100, 10, 1]; // NB not actually a true minHeap...
 
-    minHeapTwo.getMin();
-
-    const count = MinHeap.prototype._nodeValue.calls.count();
-    expect(count).toBeLessThan(2);
+    expect(minHeapTwo.getMin()).toEqual(1000);
   });
 });
-
-// spyOn(Array.prototype, "mergeSort").and.callThrough();
-//
-// array.mergeSort();
-//
-// const count = Array.prototype.mergeSort.calls.count();
-// expect(count).toBeGreaterThan(4);
-// expect(count).toBeLessThan(10);
-
-
-// beforeEach(() => {
-//   class Cat {
-//     constructor (name) {
-//       this.name = name;
-//     }
-//
-//     sayHello () {
-//       return this.name + " says hello!";
-//     }
-//
-//     greetOne (otherCat) {
-//       return this.name + " says hello to " + otherCat.name;
-//     }
-//
-//     greetTwo (otherCat1, otherCat2) {
-//       return this.name + " says hello to " + otherCat1.name + " and " +
-//         otherCat2.name;
-//     }
-//   }
-//
-//   sally = new Cat("Sally");
-//   markov = new Cat("Markov");
-//   curie = new Cat("Curie");
-// });
