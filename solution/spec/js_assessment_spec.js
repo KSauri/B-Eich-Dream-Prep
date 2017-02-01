@@ -42,13 +42,16 @@ describe("Function.prototype.myCurry", () => {
 
 describe("Array.prototype.myFlatten", ()=> {
   // before each, declare var names before before each
-  const simpleArray = [1,2,3,4,5];
+  let simpleArray, nestedArray, doublyNestedArray, suhNestedArray;
+  beforeEach(() => {
+    simpleArray = [1,2,3,4,5];
 
-  const nestedArray = [1,2,[3],4,[5,6,7]];
+    nestedArray = [1,2,[3],4,[5,6,7]];
 
-  const doublyNestedArray = [1,[2],[3,[4],[[],5]],6];
+    doublyNestedArray = [1,[2],[3,[4],[[],5]],6];
 
-  const suhNestedArray = [1,[[[2]]],[[[[4, 5 ,6]]]], 7];
+    suhNestedArray = [1,[[[2]]],[[[[4, 5 ,6]]]], 7];
+  });
 
   it("can handle an empty array", () => {
     expect([].myFlatten()).toEqual([]);
@@ -73,7 +76,7 @@ describe("Array.prototype.myFlatten", ()=> {
   });
 
   it("calls itself recursively", () => {
-    spyOn(Array.prototype.myFlatten, "myFlatten").and.callThrough();
+    spyOn(Array.prototype, "myFlatten").and.callThrough();
 
     suhNestedArray.myFlatten();
 
@@ -118,10 +121,11 @@ describe("Function.prototype.myCall", () => {
       .toEqual("Sally says hello to Markov and Curie");
   });
   it("does not use the 'call' function", () => {
-    spyOn(Function.prototype, "call");
+    spyOn(Function.prototype, "call").and.callThrough();
 
     sally.greetTwo.myCall(sally, markov, curie);
-    expect(Function.prototype.call).not.toHaveBeenCalled();
+    const count = Function.prototype.call.calls.count()
+    expect(count).toBeLessThan(1);
   });
 
   it("should call the function method style on the context", () => {
@@ -299,7 +303,7 @@ describe("#transpose", () => {
 //
 //                      3
 //                    /   \
-//                   5      3
+//                   5     3
 //                 /  \    /
 //                7    9  6
 //
@@ -374,11 +378,11 @@ describe("minHeap", () => {
   it("calls swap correct number of times", () => {
     spyOn(MinHeap.prototype, "_swap").and.callThrough();
 
-    minHeapTwo.getMin();
+    minHeapTwo.add(40);
 
     const count = MinHeap.prototype._swap.calls.count();
-    expect(count).toBeGreaterThan(4);
-    expect(count).toBeLessThan(8);
+    expect(count).toBeGreaterThan(1);
+    expect(count).toBeLessThan(5);
   });
 
   it("returns the min", () => {

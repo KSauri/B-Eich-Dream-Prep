@@ -36,6 +36,7 @@ Write transpose(arr);
 */
 
 
+// NB this is a bonus!
 // Heaps are data structures that allow for constant time lookup of minimum
 // and maximum, in the case of min heaps and max heaps, respectively.
 // In other words, given an array of numbers translated to a min heap, you
@@ -47,7 +48,7 @@ Write transpose(arr);
 // instance method that adds elements in log(n) time.
 //
 // The only rule for a minimum heap is that no node has a parent
-// that is larger than it - tho parents can be the same as children (just not larger).
+// that is larger than it - though parents can be the same as children (just not larger).
 //
 // The hard part will be adding elements. Min heaps are binary trees that
 // minimize depth - this means that each generation is filled from left
@@ -56,7 +57,7 @@ Write transpose(arr);
 //
 //                      3
 //                    /   \
-//                   5      3
+//                   5     3
 //                 /  \    /
 //                7    9  6
 //
@@ -66,7 +67,7 @@ Write transpose(arr);
 // The way we add an element is, you find the NEXT place an element should be added
 // (in our example, to the right of 6), and place the new element there.
 //
-// And then swap the element with its parents until it is either greater than or
+// Then we swap the element with its parents until it is either greater than or
 // equal to its parent.
 //
 // So, if we were to add '1' to this example, it would swap with its first parent
@@ -74,11 +75,11 @@ Write transpose(arr);
 //
 // However, if we were to add a '5', no swapping would occur.
 
-// An convenient implementation of a min-heap is with an array that stores allow
-// of the elements ordered by their position in the tree. In this ordering, the
-// first element (at index 0) is the root minimum element. For the above tree,
+// A convenient implementation of a min-heap is with an array that allows us to
+// create the correct tree structure using array indices. In this ordering, the
+// first element (at index 0) is the root element (AKA the min). For the above tree,
 // the array representation would be so:
-//      [1, 5, 3, 7, 8, 6]
+//      [1, 5, 3, 7, 9, 6]
 //  idx: 0  1  2  3  4  5
 
 // The ordering starts at the top, then traverses each row of the tree from left to
@@ -86,7 +87,7 @@ Write transpose(arr);
 // push the element onto the array.
 
 // Additionally, the parent of an element at a given index i is always the element
-// at floor(i / 2). For example, the parent of 7 (index 3) is 5 (index 3 / 2 = 1).
+// at Math.floor(i / 2). For example, the parent of 7 (index 3) is 5 (index 3 / 2 = 1).
 // The exception is the element at index 0, which has no parent.
 //
 // For this problem, you should have a class for MinHeap,
@@ -104,10 +105,10 @@ MinHeap.prototype.getMin = function () {
 
 };
 
-//#add must push in the given node value and then perform the
-//necessary swapping until the value of that node's parent
-//is less than that node's value (or the node is at the front
-//of our heap)
+//#add must push in the new value and then perform the
+//necessary swapping until the tree is correctly structure.
+//That is, the value has a parent less than it, OR the value
+// is the new root node, if it happens to be the minimum.
 MinHeap.prototype.add = function (value) {
 
 };
